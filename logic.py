@@ -3,8 +3,24 @@ import cv2
 import mss
 import numpy as np
 from time import sleep
+import config
+import keyboard
 
-# Posição do alvo e do quadro
+#Escolha de níveis
+def escolhas(event):
+    if event.name == "z":
+        event.name = " "
+        procurar(config.area1)
+
+    if event.name == "x":
+        event.name = " "
+        print("nível 2")
+
+    if event.name == "c":
+        event.name = " "
+        print("nível 3")
+
+# Posição do alvo e do area
 def alvo():
 
     print("def alvo")
@@ -22,7 +38,7 @@ def alvo():
 
 
 # Programa que procura o template
-def procurar(quadro):
+def procurar(area):
 
     print("def procurar")
 
@@ -39,8 +55,8 @@ def procurar(quadro):
 
         while ok != 1:
 
-            # Atualiza a imagem do quadro
-            imagem_tela = np.array(sct.grab(quadro))
+            # Atualiza a imagem do area
+            imagem_tela = np.array(sct.grab(area))
             imagem_tela = cv2.cvtColor(imagem_tela, cv2.COLOR_BGRA2GRAY)
 
             # Procura o alvo
@@ -75,7 +91,7 @@ def procurar(quadro):
                 # 2. Espera a imagem mudar
                 while True:
 
-                    imagem_atual = np.array(sct.grab(quadro))
+                    imagem_atual = np.array(sct.grab(area))
                     imagem_atual = cv2.cvtColor(imagem_atual, cv2.COLOR_BGRA2GRAY)
 
                     # Recorta exatamente a mesma área encontrada anteriormente 
@@ -93,6 +109,6 @@ def procurar(quadro):
                         print("ok")
                         break
 
-                    sleep(0.005)
+                    sleep(0.0025)
 
                 return print("feito")
