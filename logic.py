@@ -4,21 +4,17 @@ import mss
 import numpy as np
 from time import sleep
 import config
-import keyboard
 
 #Escolha de níveis
-def escolhas(event):
-    if event.name == "z":
-        event.name = " "
+def escolhas(tecla):
+    if tecla == "z":
         procurar(config.area1)
 
-    if event.name == "x":
-        event.name = " "
-        print("nível 2")
+    if tecla == "x":
+        print("Nível 2")
 
-    if event.name == "c":
-        event.name = " "
-        print("nível 3")
+    if tecla == "c":
+        print("Nível 3")
 
 # Posição do alvo e do area
 def alvo():
