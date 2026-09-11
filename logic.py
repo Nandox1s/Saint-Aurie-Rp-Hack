@@ -4,17 +4,23 @@ import mss
 import numpy as np
 from time import sleep
 import config
+from keyboard import wait
 
 #Escolha de níveis
 def escolhas(tecla):
     if tecla == "z":
-        procurar(config.area1)
+        for i in range(0,2):
+            procurar(config.area1,0.55)
+            wait("z")
+        procurar(config.area1,0.55)
+        print("Nível 1 finalizado")
 
     if tecla == "x":
         print("Nível 2")
 
     if tecla == "c":
-        print("Nível 3")
+        procurar(config.area3,0.7)
+        print("Nível 3 finalizado")
 
 # Posição do alvo e do area
 def alvo():
@@ -34,9 +40,7 @@ def alvo():
 
 
 # Programa que procura o template
-def procurar(area):
-
-    print("def procurar")
+def procurar(area,var_conf):
 
     ok = 0
 
@@ -65,8 +69,7 @@ def procurar(area):
             _, confianca, _, posicao = cv2.minMaxLoc(resultado)
 
             # 1. Achou a imagem
-            print("procurando...")
-            if confianca >= 0.55:
+            if confianca >= var_conf:
 
                 print("Alvo encontrado! ", posicao, "Confiança: ",confianca)
 
@@ -83,6 +86,11 @@ def procurar(area):
 
                 # Salva o que foi encontrado
                 cv2.imwrite("prints/encontrado.png", encontrado)
+                if area["left"] == 840:
+                    x_mod = posicao[0] + 840
+                    y_mod = posicao[1] + 360
+                    pyautogui.click(x_mod,y_mod)
+                    break
 
                 # 2. Espera a imagem mudar
                 while True:
@@ -102,9 +110,7 @@ def procurar(area):
                         print("mudou",posicao)
                         pyautogui.click()
                         ok = 1
-                        print("ok")
                         break
 
                     sleep(0.0025)
 
-                return print("feito")

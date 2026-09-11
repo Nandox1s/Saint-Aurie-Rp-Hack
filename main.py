@@ -4,6 +4,7 @@ import logic
                 
 # Programa Principal
 while True:
+    #desbloquei com ' e em seguida espera o comando do nível do hack
     keyboard.wait("'")
     print("Desbloqueado...")
 
